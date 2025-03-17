@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import getFeeds from "./api";
+import { ArticleCard } from "./components/ArticleCard";
 
 export default function App() {
   const [articles, setArticles] = useState<any[]>([]);
@@ -20,11 +21,12 @@ export default function App() {
       {articles.length > 0 ? (
         <ul>
           {articles.map((article, index) => (
-            <li key={index}>
-              <a href={article.link} target="_blank" rel="noopener noreferrer">
-                {article.title}
-              </a>
-            </li>
+            <ArticleCard key={index} article={article}/>
+            // <li key={index}>
+            //   <a href={article.link} target="_blank" rel="noopener noreferrer">
+            //     {article.title}
+            //   </a>
+            // </li>
           ))}
         </ul>
       ) : (
