@@ -15,9 +15,13 @@ const RSS_SOURCES = [
 
 export default async function getFeeds(){
     try {
-        const responses = await Promise.all(RSS_SOURCES.map((url) => axios.get(url)));
-        const feeds = responses.map((res) => res.data.items).flat();
-        return feeds;
+        const responses = await Promise.allSettled(RSS_SOURCES.map((url) => axios.get(url)));
+        const successfulFeeds = responses
+            .filter((res) => res.status === "fulfilled")
+            .map((res) => (res as PromiseFulfilledResult<any>).value.data.items)
+            .flat();
+
+        return successfulFeeds;
       } catch (error) {
         console.error("Error fetching feeds:", error);
         return [];
