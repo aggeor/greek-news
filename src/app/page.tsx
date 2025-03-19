@@ -85,7 +85,7 @@ export default function App() {
         <DarkModeToggle />
       </div>
       {!isLoading ? (
-        <div className="grid grid-cols-2">
+        <div className="grid lg:grid-cols-2 md:grid-cols-1">
           {filteredArticles.sort((a,b) => (a.pubDate < b.pubDate) ? 1 : -1 ).map((article, index) => (
             <ArticleCard key={index} article={article} toggleDetails={toggleDetails}/>
           ))}
