@@ -6,6 +6,7 @@ import { ArticleCard } from "./components/ArticleCard";
 import ArticleDetails from "./components/ArticleDetails";
 import { LoadingSkeleton } from "./components/Skeleton";
 import { DarkModeToggle } from "./components/DarkModeToggle";
+import Searchbar from "./components/Searchbar";
 
 export default function App() {
   const [articles, setArticles] = useState<any[]>([]);
@@ -47,6 +48,7 @@ export default function App() {
     <div>
       <div className="flex flex-row justify-between sticky top-0 z-10 bg-gradient-to-b from-gray-100 to-transparent dark:from-gray-900 dark:to-transparent">
         <h1 className="text-3xl font-bold m-4">Latest News</h1>
+        <Searchbar />
         <DarkModeToggle />
       </div>
       {!isLoading ? (
