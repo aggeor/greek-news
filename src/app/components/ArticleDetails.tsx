@@ -16,6 +16,7 @@ export default function ArticleDetails({ article, onBack }: ArticleCardProps) {
 
   const { imageUrl, cleanedDescription } = processArticleDescription(article.description);
   const { cleanedContent } = processArticleContent(article.content);
+  window.scrollTo(0,0);
   return (
     <div className="max-w-3xl mx-auto p-4">
       <Card>

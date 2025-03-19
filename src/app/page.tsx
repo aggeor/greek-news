@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import getFeeds from "./api";
 import { ArticleCard } from "./components/ArticleCard";
 import ArticleDetails from "./components/ArticleDetails";
@@ -8,6 +8,7 @@ import ArticleDetails from "./components/ArticleDetails";
 export default function App() {
   const [articles, setArticles] = useState<any[]>([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const scrollPositionRef = useRef(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -20,6 +21,7 @@ export default function App() {
   
   const [showDetails, setShowDetails ] = useState(false);
   function toggleDetails (article:any){
+    scrollPositionRef.current = window.scrollY;
     setShowDetails(!showDetails);
     setSelectedArticle(article);
   }
@@ -28,6 +30,11 @@ export default function App() {
     setShowDetails(false);
     setSelectedArticle(null);
   }
+  useEffect(() => {
+    if (!showDetails) {
+      window.scrollTo(0, scrollPositionRef.current);
+    }
+  }, [showDetails]);
 
   if (showDetails) return ( <ArticleDetails article={selectedArticle} onBack={back} />);
 
