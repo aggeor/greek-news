@@ -4,16 +4,20 @@ import { useState, useEffect, useRef } from "react";
 import getFeeds from "./api";
 import { ArticleCard } from "./components/ArticleCard";
 import ArticleDetails from "./components/ArticleDetails";
+import { LoadingSkeleton } from "./components/Skeleton";
 
 export default function App() {
   const [articles, setArticles] = useState<any[]>([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const scrollPositionRef = useRef(0);
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       const data = await getFeeds();
       setArticles(data);
+      setIsLoading(false);
     }
     fetchData();
   }, []);
@@ -41,19 +45,14 @@ export default function App() {
   return (
     <div>
       <h1>Latest News</h1>
-      {articles.length > 0 ? (
+      {!isLoading ? (
         <ul>
           {articles.map((article, index) => (
-            <ArticleCard key={index} article={article} toggleDetails={toggleDetails} />
-            // <li key={index}>
-            //   <a href={article.link} target="_blank" rel="noopener noreferrer">
-            //     {article.title}
-            //   </a>
-            // </li>
+            <ArticleCard key={index} article={article} toggleDetails={toggleDetails}/>
           ))}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <LoadingSkeleton />
       )}
     </div>
   );
