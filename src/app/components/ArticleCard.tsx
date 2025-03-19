@@ -18,7 +18,7 @@ export function ArticleCard({ article, toggleDetails }: ArticleCardProps) {
   const { imageUrl, cleanedDescription } = processArticleDescription(article.description);
 
   return (
-    <Card className="grid sm:grid-cols-[1fr] lg:grid-cols-[auto_1fr] max-w-3xl items-start gap-0.5">
+    <Card className="grid sm:grid-cols-[1fr] lg:grid-cols-[auto_1fr] max-w-3xl items-start gap-0.5 m-4">
       
       {imageUrl && (
         <Image
