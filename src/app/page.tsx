@@ -51,7 +51,7 @@ export default function App() {
       </div>
       {!isLoading ? (
         <ul>
-          {articles.map((article, index) => (
+          {articles.sort((a,b) => (a.pubDate < b.pubDate) ? 1 : -1 ).map((article, index) => (
             <ArticleCard key={index} article={article} toggleDetails={toggleDetails}/>
           ))}
         </ul>
