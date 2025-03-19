@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+import { el } from "date-fns/locale"; // Greek locale
 
 // Function to extract first image URL and clean the description
 export function processArticleDescription(html: string): { imageUrl: string | null; cleanedDescription: string } {
@@ -43,4 +45,9 @@ export function processArticleContent(html: string): { cleanedContent: string } 
 
 export function normalizeString(str:string): string{
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+export function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return format(date, "d MMMM yyyy, HH:mm", { locale: el });
 }

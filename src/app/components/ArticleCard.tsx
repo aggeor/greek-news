@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
-import { processArticleDescription } from "../helper";
+import { processArticleDescription, formatDate } from "../helper";
 import { ArticleContent } from "./ArticleContent";
 
 interface ArticleCardProps {
@@ -33,7 +33,7 @@ export function ArticleCard({ article, toggleDetails }: ArticleCardProps) {
       <CardContent>
         <CardTitle className="text-lg line-clamp-2 mb-2">{article.title}</CardTitle>
         <div className="text-sm text-gray-600 mb-0.5">{article.author}</div>
-        <div className="text-sm text-gray-500 mb-2">{article.pubDate}</div>
+        <div className="text-sm text-gray-500 mb-2">{formatDate(article.pubDate)}</div>
         <CardDescription>
           <ArticleContent content={cleanedDescription} />
         </CardDescription>

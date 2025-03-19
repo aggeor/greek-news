@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-import { processArticleContent, processArticleDescription } from "../helper";
+import { formatDate, processArticleContent, processArticleDescription } from "../helper";
 import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { ArticleContent } from "./ArticleContent";
@@ -28,7 +28,7 @@ export default function ArticleDetails({ article, onBack }: ArticleCardProps) {
           <CardTitle className="text-2xl">{article.title}</CardTitle>
           {imageUrl && <Image src={imageUrl} width={1000} height={400} alt="Image" className="rounded-md object-cover" />}
           <div>{article.author}</div>
-          <div>{article.pubDate}</div>
+          <div>{formatDate(article.pubDate)}</div>
         </CardHeader>
         <CardContent>
           <ArticleContent content={cleanedContent} />
