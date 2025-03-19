@@ -1,19 +1,74 @@
-import React from 'react'
+"use client";
+import React, { useState, ChangeEvent, useRef, useEffect } from "react";
+import { X, Search } from "lucide-react";
+import { motion } from "framer-motion";
 
-function Searchbar() {
-  return (
-    <form className="max-w-4xl mx-auto m-4 w-full">   
-    <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-        <div className="relative">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                </svg>
-            </div>
-            <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-3xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Αναζήτηση" required />
-        </div>
-    </form>
-  )
+interface SearchBarProps {
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onClear: () => void;
 }
 
-export default Searchbar
+function Searchbar({ value, onChange, onClear }: SearchBarProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  // Close search bar when clicking outside (only if input is empty)
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node) &&
+        value === "" // Only collapse if input is empty
+      ) {
+        setIsExpanded(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [value]);
+
+  return (
+    <div ref={wrapperRef} className="relative flex items-center">
+      {/* Search Icon (acts as a button for expansion) */}
+      <button
+        onClick={() => setIsExpanded(true)}
+        className="absolute left-3 text-gray-400"
+      >
+        <Search size={18} />
+      </button>
+
+      {/* Motion Input Field */}
+      <motion.input
+        ref={inputRef}
+        value={value}
+        onChange={onChange}
+        initial={{ width: "2.5rem" }}
+        animate={{ width: isExpanded ? "16rem" : "2.5rem" }} 
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+          isExpanded ? "shadow-md" : "cursor-pointer"
+        }`}
+        placeholder={isExpanded ? "Αναζήτηση..." : ""}
+        onFocus={() => setIsExpanded(true)}
+      />
+
+      {/* Clear Button (Only Visible When Expanded & Input is Not Empty) */}
+      {isExpanded && value && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent outside click from collapsing
+            onClear(); // Clears the input
+          }}
+          className="absolute right-3 text-gray-400 hover:text-gray-600"
+        >
+          <X size={18} />
+        </button>
+      )}
+    </div>
+  );
+}
+
+export default Searchbar;
