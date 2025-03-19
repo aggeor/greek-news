@@ -47,7 +47,7 @@ function Searchbar({ value, onChange, onClear }: SearchBarProps) {
         initial={{ width: "2.5rem" }}
         animate={{ width: isExpanded ? "16rem" : "2.5rem" }} 
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className={`p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+        className={`p-2 pl-10 pr-8 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
           isExpanded ? "shadow-md" : "cursor-pointer"
         }`}
         placeholder={isExpanded ? "Αναζήτηση..." : ""}
