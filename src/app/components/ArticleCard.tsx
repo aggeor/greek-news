@@ -15,18 +15,11 @@ import ArticleDetails from "./ArticleDetails";
 
 interface ArticleCardProps{
     article:any
+    toggleDetails:(article:any)=>void
 }
 
-export function ArticleCard({ article }: ArticleCardProps) {
-  const [showDetails, setShowDetails ] = useState(false);
+export function ArticleCard({ article, toggleDetails }: ArticleCardProps) {
   const { imageUrl, cleanedDescription } = processArticleDescription(article.description);
-  const articleData = encodeURIComponent(JSON.stringify(article)); // Serialize article data
-
-  function toggleDetails (){
-    setShowDetails(!showDetails);
-  }
-
-  if (showDetails) return ( <ArticleDetails article={article} />);
 
   return (
     <Card className="grid grid-cols-[auto_1fr] max-w-3xl p-2 gap-1">
@@ -39,7 +32,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
               <Description description={cleanedDescription} />
             </CardDescription>
 
-            <button onClick={toggleDetails} > Διαβαστε Περισσότερα </button>
+            <button onClick={()=>toggleDetails(article)} > Διαβαστε Περισσότερα </button>
       </CardHeader>
     </Card>
   )
