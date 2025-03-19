@@ -40,3 +40,7 @@ export function processArticleContent(html: string): { cleanedContent: string } 
     cleanedContent: doc.body.innerHTML,
   };
 }
+
+export function normalizeString(str:string): string{
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}

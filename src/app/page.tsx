@@ -7,6 +7,7 @@ import ArticleDetails from "./components/ArticleDetails";
 import { LoadingSkeleton } from "./components/Skeleton";
 import { DarkModeToggle } from "./components/DarkModeToggle";
 import Searchbar from "./components/Searchbar";
+import { normalizeString } from "./helper";
 
 export default function App() {
   const [articles, setArticles] = useState<any[]>([]);
@@ -51,10 +52,10 @@ export default function App() {
   
     if (searchTerm !== "") {
       const filtered = articles.filter((article) =>
-        article.title.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(searchTerm) ||
-        article.description.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(searchTerm) ||
-        article.content.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(searchTerm)||
-        article.author.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(searchTerm)
+        normalizeString(article.title).includes(normalizeString(searchTerm)) ||
+        normalizeString(article.description).includes(normalizeString(searchTerm)) ||
+        normalizeString(article.content).includes(normalizeString(searchTerm)) ||
+        normalizeString(article.author).includes(normalizeString(searchTerm))
       );
       setFilteredArticles(filtered);
       window.scrollTo(0, 0);
