@@ -51,10 +51,10 @@ export default function App() {
   
     if (searchTerm !== "") {
       const filtered = articles.filter((article) =>
-        article.title.toLowerCase().includes(searchTerm) ||
-        article.description.toLowerCase().includes(searchTerm) ||
-        article.content.toLowerCase().includes(searchTerm)||
-        article.author.toLowerCase().includes(searchTerm)
+        article.title.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(searchTerm) ||
+        article.description.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(searchTerm) ||
+        article.content.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(searchTerm)||
+        article.author.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(searchTerm)
       );
       setFilteredArticles(filtered);
       window.scrollTo(0, 0);
