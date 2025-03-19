@@ -51,7 +51,10 @@ export default function App() {
   
     if (searchTerm !== "") {
       const filtered = articles.filter((article) =>
-        article.title.toLowerCase().includes(searchTerm)
+        article.title.toLowerCase().includes(searchTerm) ||
+        article.description.toLowerCase().includes(searchTerm) ||
+        article.content.toLowerCase().includes(searchTerm)||
+        article.author.toLowerCase().includes(searchTerm)
       );
       setFilteredArticles(filtered);
       window.scrollTo(0, 0);
@@ -71,7 +74,7 @@ export default function App() {
     <div>
       <div className="flex flex-row justify-between sticky top-0 z-10 bg-gradient-to-b from-gray-100 to-transparent dark:from-gray-900 dark:to-transparent">
         <div className="flex flex-row">
-          <h1 className="text-3xl font-bold m-4">Latest News</h1>
+          <h1 className="text-3xl font-bold m-4">Τελευταία Νέα & Ειδήσεις</h1>
           <Searchbar 
               onChange={handleSearchChange}
               onClear={handleSearchClear}
