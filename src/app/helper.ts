@@ -26,3 +26,17 @@ export function processArticleDescription(html: string): { imageUrl: string | nu
       cleanedDescription: doc.body.innerHTML,
     };
   }
+
+  
+// Function to clean the article content
+export function processArticleContent(html: string): { cleanedContent: string } {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  
+  // Extract first image URL
+  const img = doc.querySelector("img");
+  img?.parentNode?.removeChild(img); // Remove image
+
+  return {
+    cleanedContent: doc.body.innerHTML,
+  };
+}

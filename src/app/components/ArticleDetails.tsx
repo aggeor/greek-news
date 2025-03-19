@@ -2,10 +2,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-import DOMPurify from "dompurify";
-import { processArticleDescription } from "../helper";
+import { processArticleContent, processArticleDescription } from "../helper";
 import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button";
+import { ArticleContent } from "./ArticleContent";
 
 interface ArticleCardProps{
   article:any
@@ -15,7 +15,7 @@ interface ArticleCardProps{
 export default function ArticleDetails({ article, onBack }: ArticleCardProps) {
 
   const { imageUrl, cleanedDescription } = processArticleDescription(article.description);
-
+  const { cleanedContent } = processArticleContent(article.content);
   return (
     <div className="max-w-3xl mx-auto p-4">
       <Card>
@@ -28,22 +28,11 @@ export default function ArticleDetails({ article, onBack }: ArticleCardProps) {
           {imageUrl && <Image src={imageUrl} width={1000} height={400} alt="Image" className="rounded-md object-cover" />}
           <div>{article.author}</div>
           <div>{article.pubDate}</div>
-          <CardDescription>
-            <Description description={cleanedDescription} />
-          </CardDescription>
-          <CardContent>
-            {article.content}
-          </CardContent>
         </CardHeader>
+        <CardContent>
+          <ArticleContent content={cleanedContent} />
+        </CardContent>
       </Card>
     </div>
-  );
-}
-
-function Description({ description }: { description: string }) {
-  const sanitizedHTML = DOMPurify.sanitize(description);
-
-  return (
-    <div className="prose max-w-none article-description" dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
   );
 }

@@ -1,17 +1,12 @@
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import Image from "next/image"
-import DOMPurify from "dompurify";
 import { processArticleDescription } from "../helper";
-import Link from "next/link";
-import { useState } from "react";
-import ArticleDetails from "./ArticleDetails";
+import { ArticleContent } from "./ArticleContent";
 
 interface ArticleCardProps{
     article:any
@@ -29,19 +24,11 @@ export function ArticleCard({ article, toggleDetails }: ArticleCardProps) {
             <div>{article.author}</div>
             <div>{article.pubDate}</div>
             <CardDescription>
-              <Description description={cleanedDescription} />
+              <ArticleContent content={cleanedDescription} />
             </CardDescription>
 
             <button onClick={()=>toggleDetails(article)} > Διαβαστε Περισσότερα </button>
       </CardHeader>
     </Card>
   )
-}
-
-function Description({ description }: { description: string }) {
-  const sanitizedHTML = DOMPurify.sanitize(description);
-
-  return (
-      <div className="prose max-w-none article-description" dangerouslySetInnerHTML={{ __html: sanitizedHTML }} /> 
-  );
 }
