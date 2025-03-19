@@ -44,7 +44,7 @@ export default function App() {
 
   return (
     <div>
-      <h1>Latest News</h1>
+      <h1 className="text-3xl font-bold m-4">Latest News</h1>
       {!isLoading ? (
         <ul>
           {articles.map((article, index) => (
