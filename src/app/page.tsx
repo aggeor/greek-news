@@ -50,11 +50,11 @@ export default function App() {
         <DarkModeToggle />
       </div>
       {!isLoading ? (
-        <ul>
+        <div className="grid grid-cols-2">
           {articles.sort((a,b) => (a.pubDate < b.pubDate) ? 1 : -1 ).map((article, index) => (
             <ArticleCard key={index} article={article} toggleDetails={toggleDetails}/>
           ))}
-        </ul>
+        </div>
       ) : (
         <LoadingSkeleton />
       )}
