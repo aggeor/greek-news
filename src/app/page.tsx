@@ -75,7 +75,7 @@ export default function App() {
     <div>
       <div className="flex flex-row justify-between sticky top-0 z-10 bg-gradient-to-b from-gray-100 to-transparent dark:from-gray-900 dark:to-transparent">
         <div className="flex flex-row">
-          <h1 className="text-3xl font-bold m-4">Τελευταία Νέα & Ειδήσεις</h1>
+          <h1 className="text-3xl font-bold m-4">Τελευταία Νέα</h1>
           <Searchbar 
               onChange={handleSearchChange}
               onClear={handleSearchClear}
@@ -85,7 +85,7 @@ export default function App() {
         <DarkModeToggle />
       </div>
       {!isLoading ? (
-        <div className="grid lg:grid-cols-2 md:grid-cols-1">
+        <div className="grid lg:grid-cols-2 md:grid-cols-1 md:justify-self-center">
           {filteredArticles.sort((a,b) => (a.pubDate < b.pubDate) ? 1 : -1 ).map((article, index) => (
             <ArticleCard key={index} article={article} toggleDetails={toggleDetails}/>
           ))}
