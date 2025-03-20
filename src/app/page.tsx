@@ -8,6 +8,7 @@ import { LoadingSkeleton } from "./components/Skeleton";
 import { DarkModeToggle } from "./components/DarkModeToggle";
 import Searchbar from "./components/Searchbar";
 import { normalizeString } from "./helper";
+import TagsList from "./components/TagsList";
 
 export default function App() {
   const [articles, setArticles] = useState<any[]>([]);
@@ -16,6 +17,11 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const scrollPositionRef = useRef(0);
   const [input, setInput] = useState("");
+  const [tags, setTags] = useState<any[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [showDetails, setShowDetails ] = useState(false);
+  const [showAllTags, setShowAllTags] = useState(false);
+  const visibleTags = showAllTags ? tags : tags.slice(0, 10);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,13 +29,41 @@ export default function App() {
       const data = await getFeeds();
       setArticles(data);
       setFilteredArticles(data);
+      const categories = new Set(
+        data.flatMap((article) => 
+          (article.categories || []).map((category: string) => normalizeString(category).toUpperCase())
+        )
+      );
+
+      setTags(Array.from(categories));
       setIsLoading(false);
     }
     fetchData();
   }, []);
 
-  
-  const [showDetails, setShowDetails ] = useState(false);
+  const handleTagClick = (tag: string) => {
+    setSelectedTags((prevTags) => {
+      const newTags = prevTags.includes(tag)
+        ? prevTags.filter((t) => t !== tag)
+        : [...prevTags, tag];
+
+      if (newTags.length === 0) {
+        setFilteredArticles(articles);
+      } else {
+        setFilteredArticles(
+          articles.filter((article) =>
+            article.categories?.some((category: string) => newTags.includes(normalizeString(category).toUpperCase()))
+          )
+        );
+      }
+      return newTags;
+    });
+  };
+
+  const handleShowAllTagsToggleClick = ()=>{
+    setShowAllTags(!showAllTags)
+  }
+
   function toggleDetails (article:any){
     scrollPositionRef.current = window.scrollY;
     setShowDetails(!showDetails);
@@ -84,6 +118,15 @@ export default function App() {
         </div>
         <DarkModeToggle />
       </div>
+      <TagsList 
+        visibleTags={visibleTags}
+        selectedTags={selectedTags}
+        showAllTags={showAllTags}
+        totalTags={tags.length}
+        onTagClick={handleTagClick}
+        onTagToggle={handleShowAllTagsToggleClick}
+      />
+      
       {!isLoading ? (
         <div className="grid lg:grid-cols-2 md:grid-cols-1 md:justify-self-center">
           {filteredArticles.sort((a,b) => (a.pubDate < b.pubDate) ? 1 : -1 ).map((article, index) => (
