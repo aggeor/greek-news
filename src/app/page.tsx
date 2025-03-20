@@ -118,15 +118,16 @@ export default function App() {
         </div>
         <DarkModeToggle />
       </div>
-      <TagsList 
-        visibleTags={visibleTags}
-        selectedTags={selectedTags}
-        showAllTags={showAllTags}
-        totalTags={tags.length}
-        onTagClick={handleTagClick}
-        onTagToggle={handleShowAllTagsToggleClick}
-      />
-      
+      {!isLoading &&
+        <TagsList 
+          visibleTags={visibleTags}
+          selectedTags={selectedTags}
+          showAllTags={showAllTags}
+          totalTags={tags.length}
+          onTagClick={handleTagClick}
+          onTagToggle={handleShowAllTagsToggleClick}
+        />
+      }
       {!isLoading ? (
         <div className="grid 2xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 md:justify-self-center">
           {filteredArticles.sort((a,b) => (a.pubDate < b.pubDate) ? 1 : -1 ).map((article, index) => (
