@@ -128,7 +128,7 @@ export default function App() {
       />
       
       {!isLoading ? (
-        <div className="grid lg:grid-cols-2 md:grid-cols-1 md:justify-self-center">
+        <div className="grid 2xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 md:justify-self-center">
           {filteredArticles.sort((a,b) => (a.pubDate < b.pubDate) ? 1 : -1 ).map((article, index) => (
             <ArticleCard key={index} article={article} toggleDetails={toggleDetails}/>
           ))}
