@@ -1,3 +1,18 @@
+## Greek news
+
+A news aggregator app that displays articles from greek websites
+
+Used [rss2json](https://rss2json.com/) to convert rss feeds to json format.
+
+The the rss feeds for news articles used for the purposes of this project are:
+- [ThePressProject](https://thepressproject.gr) - [RSS](https://thepressproject.gr/feed/)
+- [Newsbomb](https://www.newsbomb.gr) - [RSS](https://www.newsbomb.gr/oles-oi-eidhseis?format=feed&type=rss)
+- [Avgi](https://www.avgi.gr) - [RSS](https://www.avgi.gr/rss.xml)
+- [Documento](https://www.documentonews.gr) - [RSS](https://www.documentonews.gr/feed)
+- [Left.gr](https://left.gr) - [RSS](https://feeds.feedburner.com/leftgr)
+- [Kontra news](https://www.kontranews.gr) - [RSS](https://www.kontranews.gr/feed/)
+- [Ert news](https://www.ertnews.gr) - [RSS](https://www.ertnews.gr/feed/)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
